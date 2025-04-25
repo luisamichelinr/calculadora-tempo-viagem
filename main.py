@@ -8,12 +8,16 @@ def index():
 
 @app.route('/calcular_tempo', methods=['POST'])
 def calcular_tempo():
-    km = float(request.form['km'])
-    km_h = float(request.form['km_h'])
+    try:
+        km = float(request.form['km'])
+        km_h = float(request.form['km_h'])
 
-    horas = round(km / km_h, 2)
+        horas = round(km / km_h, 2)
 
-    return render_template('index.html', horas = horas)
+        return render_template('index.html', horas = horas)
+    except Exception as e:
+        horas = f'Ocorreu um erro inesperado {e}'
+        return render_template('index.html', horas = horas)
 
 if __name__ == '__main__':
     app.run(debug=True)
