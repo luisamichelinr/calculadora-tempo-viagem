@@ -12,12 +12,17 @@ def calcular_tempo():
         km = float(request.form['km'])
         km_h = float(request.form['km_h'])
 
-        horas = round(km / km_h, 2)
+        horas = int(km // km_h)
+        minutos = int(((km / km_h) - horas)*60)
 
-        return render_template('index.html', horas = horas)
+        if minutos == 0:
+            minutos = "00"
+
+        return render_template('index.html', horas = horas, minutos=minutos)
     except Exception as e:
         horas = f'Ocorreu um erro inesperado {e}'
-        return render_template('index.html', horas = horas)
+        minutos = f'Ocorreu um erro inesperado {e}'
+        return render_template('index.html', horas = horas, minutos=minutos)
 
 if __name__ == '__main__':
     app.run(debug=True)
